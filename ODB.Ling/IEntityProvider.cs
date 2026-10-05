@@ -5,7 +5,7 @@ namespace UnitODB.Linq
 {
 	public interface IEntityProvider : IQueryProvider, IProvider
 	{
-		string Translate(Expression expression); 
- 
-	}
+        IEntityQuery<T> CreateQuery<T>() where T : IEntity;
+        string Translate(Expression expression);
+    }
 }

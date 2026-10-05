@@ -82,18 +82,26 @@ namespace UnitODB.Linq {
 			}
 		}
 
-		protected virtual MemberBinding VisitBinding(MemberBinding binding)
-		{
-			return binding.BindingType switch
-			{
-				MemberBindingType.Assignment => VisitMemberAssignment((MemberAssignment)binding),
-				MemberBindingType.MemberBinding => VisitMemberMemberBinding((MemberMemberBinding)binding),
-				MemberBindingType.ListBinding => VisitMemberListBinding((MemberListBinding)binding),
-				_ => throw new Exception($"Unhandled binding type '{binding.BindingType}'"),
-			};
-		}
+        protected virtual MemberBinding VisitBinding(MemberBinding binding)
+        {
+            switch (binding.BindingType)
+            {
+                case MemberBindingType.Assignment:
+                    return VisitMemberAssignment((MemberAssignment)binding);
 
-		protected virtual ElementInit VisitElementInitializer(ElementInit initializer)
+                case MemberBindingType.MemberBinding:
+                    return VisitMemberMemberBinding((MemberMemberBinding)binding);
+
+                case MemberBindingType.ListBinding:
+                    return VisitMemberListBinding((MemberListBinding)binding);
+
+                default:
+                    throw new Exception(
+                        string.Format("Unhandled binding type '{0}'", binding.BindingType));
+            }
+        }
+
+        protected virtual ElementInit VisitElementInitializer(ElementInit initializer)
 		{
 			ReadOnlyCollection<Expression> readOnlyCollection = VisitExpressionList(initializer.Arguments);
 			if (readOnlyCollection != initializer.Arguments)

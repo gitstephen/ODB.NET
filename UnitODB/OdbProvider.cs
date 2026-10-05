@@ -22,6 +22,8 @@ namespace UnitODB
 		public virtual string DropTable(string name)
 		{
 			return "DROP TABLE IF EXISTS [" + name + "]";
-		} 
-	}
+		}
+
+		public abstract IDbDataParameter CreateParameter(int index, object value);        
+    }
 }

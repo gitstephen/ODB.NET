@@ -16,9 +16,9 @@ namespace UnitODB
 		
 		public OdbContext(IOdbProvider provider)
 		{
-			Provider = provider;
+			this.Provider = provider;
 
-            this.Connection = Provider.CreateConnection();
+            this.Connection = this.Provider.CreateConnection();
 
 			Depth = 1;
 		}
@@ -351,8 +351,6 @@ namespace UnitODB
 
 				return result;
 			}
-		}
-
-		public abstract IDbDataParameter CreateParameter(int n, object b);
+		} 
 	}
 }

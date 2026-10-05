@@ -15,16 +15,7 @@ namespace UnitODB.SQLite
 		public override int GetLastId()
 		{ 
 			return (int)(this.Connection as SQLiteConnection).LastInsertRowId;
-		}
-        public override IDbDataParameter CreateParameter(int index, object b)
-        {
-            return new SQLiteParameter
-            {
-                ParameterName = "@p" + index,
-                Value = b ?? DBNull.Value,
-                DbType = OdbSqlType.Get(b)
-            };
-        }
+		} 
 
         public override IQuery BuildQuery<T>()
         {

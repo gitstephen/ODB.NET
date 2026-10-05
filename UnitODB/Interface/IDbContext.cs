@@ -53,8 +53,6 @@ namespace UnitODB
 
 		IDataReader ExecuteReader(string sql, params IDbDataParameter[] cmdParms);
 
-		IDataReader ExecuteReader(IQuery q);
-
-		IDbDataParameter CreateParameter(int n, object b); 
+		IDataReader ExecuteReader(IQuery q); 
     }
 }

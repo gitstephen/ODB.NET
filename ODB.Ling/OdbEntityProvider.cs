@@ -71,5 +71,7 @@ namespace UnitODB.Linq
 		}
 
 		public abstract string Translate(Expression expression);
-	}
+
+		public abstract IEntityQuery<T> CreateQuery<T>() where T : IEntity;        
+    }
 }

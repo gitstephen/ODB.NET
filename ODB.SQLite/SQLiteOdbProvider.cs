@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Data.SQLite;
+using System.Reflection;
 using UnitODB;
 
 namespace UnitODB.SQLite
@@ -81,6 +82,16 @@ namespace UnitODB.SQLite
 				default:
 					return "TEXT";
 			}
-		} 
-	}
+		}
+
+        public override IDbDataParameter CreateParameter(int index, object value)
+        {
+            return new SQLiteParameter
+            {
+                ParameterName = "@p" + index,
+                Value = value ?? DBNull.Value,
+                DbType = OdbSqlType.Get(value)
+            };
+        }
+    }
 }

@@ -297,7 +297,7 @@ namespace UnitODB
 
 			int count = parameters.Count;
 
-			IDbDataParameter dbParameter = Context.CreateParameter(count, b);
+			IDbDataParameter dbParameter = Context.Provider.CreateParameter(count, b);
 			parameters.Add(dbParameter);
 			
 			return dbParameter.ParameterName;

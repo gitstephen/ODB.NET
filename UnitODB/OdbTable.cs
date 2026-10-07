@@ -3,12 +3,11 @@ using System.Collections.Generic;
 
 namespace UnitODB
 {
-
 	public class OdbTable
 	{
 		public int Id { get; set; }
 
-		public string Name { get; set; }
+		public string Name { get; private set; }
 
 		public int Parent { get; set; }
 
@@ -16,7 +15,7 @@ namespace UnitODB
 
 		public string PK { get; set; }
 
-		public List<OdbColumn> Columns { get; set; }
+		public List<OdbColumn> Columns { get; private set; }
 
 		public string Alias => "T" + Id;
 

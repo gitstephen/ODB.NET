@@ -44,24 +44,24 @@ namespace UnitODB
 			}
 		} 
 
-		public OdbRepository(IContainer unit)
+		public OdbRepository(IContainer container)
 		{
-			if (unit == null)
+			if (container == null)
 			{
-				throw new ArgumentNullException("Container");
+				throw new ArgumentNullException("container", "Container cannot be null.");
 			}
 
-			Unit = unit;
+			Unit = container;
 		}
 
-		public void SetDepth(int n)
+		public void SetDepth(int depth)
 		{
-			if (n == 0)
+			if (depth == 0)
 			{
-				throw new ArgumentNullException("Depth");
+				throw new ArgumentNullException("depth", "Depth cannot be zero.");
 			}
 
-			Unit.Context.Depth = n;
+			Unit.Context.Depth = depth;
 
 			if (_diagram != null)
 			{
@@ -111,7 +111,7 @@ namespace UnitODB
 		public virtual long Count()
 		{
 			IQuery q = Unit.Context.Count<T>();
-
+			
 			return Unit.Context.ExecuteScalar<long>(q); 
 		}
 

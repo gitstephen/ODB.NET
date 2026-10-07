@@ -331,7 +331,7 @@ namespace UnitODB
 			return Context.ExecuteReturnId(this);
 		}
 
-		public virtual T1 Single<T1>()
+		public virtual T1 Find<T1>()
 		{
 			return Context.ExecuteSingle<T1>(this);
 		} 

@@ -4,8 +4,10 @@ using System.Data;
 namespace UnitODB
 {
 	public abstract class OdbProvider : IOdbProvider
-	{	
-		public abstract string CreateColumn(OdbColumn col);
+	{
+        public IDbContext DbContext { get; set; }
+
+        public abstract string CreateColumn(OdbColumn col);
 		public abstract IDbConnection CreateConnection();
 		public abstract IDbContext CreateContext();   
 		public abstract string SqlTypeStr(Type type);

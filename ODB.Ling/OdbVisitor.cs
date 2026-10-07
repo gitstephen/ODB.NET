@@ -12,20 +12,20 @@ namespace UnitODB.Linq
 	public abstract class OdbVisitor : ExpressionVisitor, IOdbVisitor
 	{
 		protected StringBuilder _sb;
+ 
+		protected Expression _expression; 
 
-		protected Expression _expression;		
+        private int _index;
 
-		protected int _index;
+        private string _limit = ""; 
 
-		protected string _limit = ""; 
-
-		protected bool _is_count;
+		private bool _isCount;
 
 		public List<IDbDataParameter> Parameters;
 
 		public IOdbProvider Provider { get; set; } 
 		public IDiagram Diagram { get; } 
-		public bool HasCount => _is_count;
+		public bool HasCount => _isCount;
 
 		public OdbVisitor(IOdbProvider provider, int depth)
 		{
@@ -283,9 +283,9 @@ namespace UnitODB.Linq
 
 		public virtual void SetCount()
 		{
-			if (!_is_count)
+			if (!_isCount)
 			{
-				_is_count = true;
+                _isCount = true;
 				_sb.Append("COUNT(*)");
 			}
 		}
@@ -296,7 +296,7 @@ namespace UnitODB.Linq
 			_sb.Clear();
 			_index = 0;
 			_limit = "";
-			_is_count = false;
+            _isCount = false;
 		}
 
 		public abstract string Translate(Expression expression);

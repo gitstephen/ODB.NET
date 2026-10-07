@@ -3,9 +3,9 @@ using System.Linq.Expressions;
 
 namespace UnitODB.Linq
 {
-	public interface IEntityProvider : IQueryProvider, IProvider
-	{
+	public interface IEntityProvider : IQueryProvider, IOdbProvider
+    {
         IEntityQuery<T> CreateQuery<T>() where T : IEntity;
-        string Translate(Expression expression);
+        string ToSql(Expression expression);
     }
 }

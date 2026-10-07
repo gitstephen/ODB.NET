@@ -90,7 +90,7 @@ namespace UnitODB
 
 		int ExecuteReturnId();
 
-		T Single<T>();
+		T Find<T>();
 
 		IList<T> ToList<T>();  
 

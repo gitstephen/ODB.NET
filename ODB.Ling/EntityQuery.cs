@@ -56,9 +56,14 @@ namespace UnitODB.Linq
 			return GetEnumerator();
 		}
 
-		public virtual string GetSQL()
+		public virtual string GetSql()
 		{
-			return (Provider as IEntityProvider).Translate(Expression);
+			return (Provider as IEntityProvider).ToSql(Expression);
 		}
+
+        public override string ToString()
+        {
+            return this.GetSql();
+        }
 	}
 }

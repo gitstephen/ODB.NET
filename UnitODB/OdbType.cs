@@ -2,8 +2,7 @@ using System;
 
 namespace UnitODB
 {
-
-	public class OdbType
+	public static class OdbType
 	{
 		public static readonly Type Int32 = typeof(int);
 

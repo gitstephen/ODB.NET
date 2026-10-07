@@ -4,8 +4,7 @@ using System.Reflection;
 
 namespace UnitODB
 {
-
-	public class OdbMapping
+	public static class OdbMapping
 	{
 		public static OdbTable CreateTable(Type type)
 		{

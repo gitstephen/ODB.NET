@@ -3,15 +3,16 @@ using System.Data;
 
 namespace UnitODB
 {
-	public class OdbSqlType
+	public static class OdbSqlType
 	{
-		public static DbType Get(object b)
+		public static DbType Get(object obj)
 		{
-			if (b == null)
+			if (obj == null)
 			{
-				throw new ArgumentNullException("Null Parameter");
+				throw new ArgumentNullException("obj", "Object cannot be null.");
 			}
-			return Convert(b.GetType());
+
+			return Convert(obj.GetType());
 		}
 
 		public static DbType Convert(Type t)

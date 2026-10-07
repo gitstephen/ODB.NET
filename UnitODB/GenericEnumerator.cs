@@ -8,18 +8,20 @@ namespace UnitODB
 {
 	public class GenericEnumerator<T> : IOdbEnumerator<T>, IEnumerable<T>, IEnumerable, IDisposable
 	{
-		protected IDataReader dr;
+		private IDataReader dr;
 
 		private bool disposed;
 
 		public List<OdbColumn> Columns { get; private set; }
 
-		public GenericEnumerator(IQuery query)
+		public GenericEnumerator(IQuery query) : this(query.Read()) { }
+ 
+		public GenericEnumerator(IDataReader dataReader)
 		{
-			dr = query.Read();
-		}
+			dr = dataReader;
+		} 
 
-		protected virtual void Dispose(bool disposing)
+        protected virtual void Dispose(bool disposing)
 		{
 			if (disposed)
 			{

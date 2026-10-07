@@ -4,7 +4,8 @@ namespace UnitODB
 {
 	public interface IProvider
 	{
-		IDbContext CreateContext();
+        IDbContext DbContext { get; set; }
+        IDbContext CreateContext();
 		IDbConnection CreateConnection(); 
 	}
 }

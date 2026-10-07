@@ -7,14 +7,11 @@ using System.Reflection;
 
 namespace UnitODB.Linq
 {
-	public abstract class OdbEntityProvider : OdbProvider, IEntityProvider, IQueryProvider, IProvider
+	public abstract class OdbEntityProvider : OdbProvider, IEntityProvider
 	{
-		public IOdbVisitor Visitor { get; set; }
-		public IDbContext DbContext { get; set; }   
-
+		public IOdbVisitor Visitor { get; set; } 
 		protected OdbEntityProvider()
-		{
-			this.DbContext = this.CreateContext();
+		{			
 		}
 
 		public IQueryable CreateQuery(Expression expression)
@@ -44,7 +41,7 @@ namespace UnitODB.Linq
 				throw new NotSupportedException("Anonymous Expression");
 			}
 
-			string sql = Translate(expression);
+			string sql = ToSql(expression);
 
 			IDataReader dataReader = DbContext.ExecuteReader(sql, Visitor.GetParamters());
 
@@ -70,7 +67,7 @@ namespace UnitODB.Linq
 			return (obj as IEnumerable).OfType<T>().FirstOrDefault();
 		}
 
-		public abstract string Translate(Expression expression);
+		public abstract string ToSql(Expression expression);
 
 		public abstract IEntityQuery<T> CreateQuery<T>() where T : IEntity;        
     }

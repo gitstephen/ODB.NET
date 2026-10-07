@@ -64,7 +64,6 @@
     <Compile Include="Attribute\ColumnAttribute.cs" />
     <Compile Include="EntityEnumerator.cs" />
     <Compile Include="GenericEnumerator.cs" />
-    <Compile Include="Interface\ICache.cs" />
     <Compile Include="Interface\IContainer.cs" />
     <Compile Include="Interface\IDbContext.cs" />
     <Compile Include="Interface\IDiagram.cs" />

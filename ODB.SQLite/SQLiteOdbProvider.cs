@@ -1,28 +1,35 @@
 ﻿using System;
 using System.Data;
 using System.Data.SQLite;
+using System.Linq.Expressions;
 using System.Reflection;
 using UnitODB;
+using UnitODB.Linq;
 
 namespace UnitODB.SQLite
 {
-    public class SQLiteOdbProvider : OdbProvider, IProvider
+    public class SQLiteOdbProvider : OdbEntityProvider, IProvider
     {
-		public string DbString { get; set; }
+		public string DB { get; set; }
 
 		public SQLiteOdbProvider(string db)
 		{
-			this.DbString = db;
+			this.DB = db;
 		} 
 
         public override IDbContext CreateContext()
 		{  
-			return new SQLiteOdbContext(this);
-		}
+			if (this.DbContext == null)
+			{
+				this.DbContext = new SQLiteOdbContext(this);
+            }
+
+			return this.DbContext; 
+        }
 
 		public override IDbConnection CreateConnection()
 		{
-			return new SQLiteConnection(DbString);
+			return new SQLiteConnection(DB);
 		}
 
 		public override string CreateColumn(OdbColumn col)
@@ -92,6 +99,21 @@ namespace UnitODB.SQLite
                 Value = value ?? DBNull.Value,
                 DbType = OdbSqlType.Get(value)
             };
+        }
+
+        public override string ToSql(Expression expression)
+        {
+            if (this.Visitor == null)
+            {
+                this.Visitor = new SQLiteVisitor(this, 2);
+            }
+
+            return this.Visitor.Translate(expression);
+        }
+
+        public override IEntityQuery<T> CreateQuery<T>()
+        {
+            return new EntityQuery<T>(this);
         }
     }
 }

@@ -8,7 +8,7 @@ namespace UnitODB.Linq
 
 	public static class OdbLinqExtension
 	{
-		public static IEntityQuery<T> AsQueryable<T>(this IRepository<T> repo) where T : IEntity
+		public static IEntityQuery<T> GetEntityQueryable<T>(this IRepository<T> repo) where T : IEntity
 		{
 			if (repo.Unit.Provider == null)
 			{
@@ -19,17 +19,17 @@ namespace UnitODB.Linq
 
 		public static IList<T> Gets<T>(this IRepository<T> repo, Expression<Func<T, bool>> func) where T : IEntity
 		{
-			return repo.AsQueryable().Where(func).ToList();
+			return repo.GetEntityQueryable().Where(func).ToList();
 		}
 
 		public static T First<T>(this IRepository<T> repo, Expression<Func<T, bool>> func) where T : IEntity
 		{
-			return repo.AsQueryable().Where(func).FirstOrDefault();
+			return repo.GetEntityQueryable().Where(func).FirstOrDefault();
 		}
 
 		public static int Count<T>(this IRepository<T> repo, Expression<Func<T, bool>> func) where T : IEntity
 		{
-			return repo.AsQueryable().Where(func).Count();
+			return repo.GetEntityQueryable().Where(func).Count();
 		}
 	}
 }

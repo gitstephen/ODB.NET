@@ -19,13 +19,13 @@ namespace UnitODB.SQLite
 			return this;
 		}
 
-		public override IQuery Take(int n)
+		public override IQuery Take(int count)
 		{
 			if (!_limit)
 			{
 				Skip(0);
 			}
-			_sb.Append(" , " + n);
+			_sb.Append(" , " + count);
 			return this;
 		}
 

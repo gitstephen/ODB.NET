@@ -1,8 +1,12 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.ComponentModel;
+using System.Linq;
+using System.Runtime.InteropServices;
 using UnitODB;
 using UnitODB.SQLite;
+using UnitODB.Linq;
+using System.Configuration;
 
 namespace UnitTest
 {
@@ -60,6 +64,55 @@ namespace UnitTest
             }
         }
 
+        [TestMethod]
+        public void TestMethod5()
+        {
+            using (var container = CreateContainer())
+            {
+                var repo = new OdbRepository<User>(container);
+
+                var qs = from user in repo
+                         where user.Id == 2
+                         select user;
+
+                var list = qs.ToList();
+
+                Assert.AreEqual(1, list.Count);
+            }
+        }
+
+        [TestMethod]
+        public void TestMethod6()
+        {
+            using (var container = CreateContainer())
+            {
+                var repo = new OdbRepository<User>(container);
+
+                var n = repo.Count();
+
+                Assert.IsTrue(n > 1); 
+            }
+        }
+
+        [TestMethod]
+        public void TestMethod7()
+        {
+            using (var container = CreateContainer())
+            {
+                var repo =  new OdbRepository<User>(container);
+                
+                var rs = repo.GetEntityQueryable<User>();
+
+                var q = rs.Where(user => user.Id == 2).Select(user => user);
+
+                var sql = q.ToString();
+
+                var list = q.ToList();
+
+                Assert.AreEqual(1, list.Count); 
+            }
+        }
+
         private static OdbContainer CreateContainer() {
             
             string file = "test.db";
@@ -68,6 +121,6 @@ namespace UnitTest
             var provider = new SQLiteOdbProvider(connStr);
 
             return new OdbContainer(provider, 2);
-        }
+        } 
     }
 }

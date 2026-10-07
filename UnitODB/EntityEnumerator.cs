@@ -5,18 +5,19 @@ namespace UnitODB
 { 
 	public class EntityEnumerator<T> : GenericEnumerator<T> where T : IEntity
 	{
-		private int level;
+		private int level = 0;
 
 		public IDiagram Diagram { get; private set; }
 
-		public EntityEnumerator(IQuery q, IDiagram diagram)
-			: base(q)
-		{
-			Diagram = diagram;
-			level = 0;
-		}
+		public EntityEnumerator(IQuery q, IDiagram diagram) : this(q.Read(), diagram) { }
 
-		public override object GetEntity(Type type)
+		public EntityEnumerator(IDataReader dataReader, IDiagram diagram)
+			: base(dataReader)
+		{
+			Diagram = diagram; 
+        }
+
+        public override object GetEntity(Type type)
 		{
 			object obj = Activator.CreateInstance(type);
 			OdbTable table = Diagram.GetTable(type);

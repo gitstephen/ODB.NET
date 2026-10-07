@@ -5,7 +5,7 @@ namespace UnitODB
 	[AttributeUsage(AttributeTargets.Class | AttributeTargets.Property | AttributeTargets.Interface, Inherited = false, AllowMultiple = false)]
 	public class TableAttribute : Attribute
 	{
-		public string Name { get; set; }
+		public string Name { get; private set; }
 
 		public string Schema { get; set; }
 

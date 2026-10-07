@@ -120,18 +120,6 @@ namespace UnitODB
 		{
 			return BuildQuery<T>().Count("*").From();
 		}  
- 
-		public static IList<T> Collection<T>(IEnumerable<T> enumerator)
-		{
-			IList<T> list = new List<T>();
-
-			foreach (T item in enumerator)
-			{
-				list.Add(item);
-			}
-
-			return list;
-		}
 
 		public abstract int GetLastId();
 
@@ -141,7 +129,7 @@ namespace UnitODB
 		{
 			using (GenericEnumerator<T> enumerator = new GenericEnumerator<T>(q))
 			{
-				return Collection(enumerator);
+				return enumerator.ToList();
 			}
 		}
 

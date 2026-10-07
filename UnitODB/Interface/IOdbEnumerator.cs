@@ -7,5 +7,7 @@ namespace UnitODB
 	public interface IOdbEnumerator<T> : IEnumerable<T>, IEnumerable, IDisposable
 	{
 		object GetObject(Type type);
-	}
+		List<T> ToList();
+
+    }
 }

@@ -80,16 +80,11 @@ namespace UnitODB
  
 			IQuery query = this.Entities.Where(table.Alias + "." + table.PK).Eq(id).Take(1);
 
-			using (var et = new EntityEnumerator<T>(query, Diagram))
+			using (var enumerator = new EntityEnumerator<T>(query, Diagram))
 			{
-				IList<T> list = OdbContext.Collection(et);
+				var list = enumerator.ToList();
 
-				if (list.Count == 0)
-				{
-					return default(T);
-				}
-
-				return list[0];
+                return list[0];
 			} 
 		}	
 		
@@ -117,10 +112,10 @@ namespace UnitODB
 
 		public virtual IList<T> ToList()
 		{
-			using (var et = new EntityEnumerator<T>(Entities, Diagram))
+			using (var enumerator = new EntityEnumerator<T>(Entities, Diagram))
 			{
-				return OdbContext.Collection(et);
-			} 
+				return enumerator.ToList();
+            } 
 		} 
  
 		public IEnumerator<T> GetEnumerator()

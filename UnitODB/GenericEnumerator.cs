@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.Net;
 using System.Runtime.Serialization;
 
 namespace UnitODB
@@ -120,6 +121,17 @@ namespace UnitODB
 			}
 			return null;
 		}
-	}
+
+		public List<T> ToList()
+		{
+			List<T> list = new List<T>();
+
+			foreach (T item in this)
+			{
+				list.Add(item);
+			}
+			return list;
+        }
+    }
 
 }

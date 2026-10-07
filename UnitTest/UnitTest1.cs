@@ -43,9 +43,9 @@ namespace UnitTest
             {
                 var q = container.Query<User>(new string[] { "*" });
 
-                int n = q.ToList<User>().Count;
+                var list = q.ToList<User>();
 
-                Assert.IsTrue(n > 1);
+                Assert.IsTrue(list.Count > 1);
             } 
         }
 

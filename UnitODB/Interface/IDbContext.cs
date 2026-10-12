@@ -27,9 +27,12 @@ namespace UnitODB
 
 		IQuery Update<T>();
 
-		IQuery Count<T>(); 
+		IQuery Count<T>();
 
-		int ExecuteStore<T>(T t);
+        string CreateTable(string name, string[] cols);
+        string DropTable(string name);
+
+        int ExecuteStore<T>(T t);
 
 		int ExecuteInsert<T>(T t);
 

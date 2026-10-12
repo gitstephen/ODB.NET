@@ -7,5 +7,5 @@ namespace UnitODB
         IDbContext DbContext { get; set; }
         IDbContext CreateContext();
 		IDbConnection CreateConnection(); 
-	}
+    }
 }

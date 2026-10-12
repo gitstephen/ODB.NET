@@ -10,11 +10,11 @@ namespace UnitODB.Linq
 	{
 		public static IEntityQuery<T> GetEntityQueryable<T>(this IRepository<T> repo) where T : IEntity
 		{
-			if (repo.Unit.Provider == null)
+			if (repo.DbContext.Provider == null)
 			{
 				throw new NullReferenceException("provider");
 			}
-			return (repo.Unit.Provider as IEntityProvider).CreateQuery<T>();
+			return (repo.DbContext.Provider as IEntityProvider).CreateQuery<T>();
 		}
 
 		public static IList<T> Gets<T>(this IRepository<T> repo, Expression<Func<T, bool>> func) where T : IEntity

@@ -97,9 +97,24 @@ namespace UnitODB
 				Transaction.Dispose();
 				Transaction = null;
 			}
-		}
+		} 
 
-		public abstract IQuery BuildQuery<T>(); 
+        public abstract int GetLastId();
+		public abstract IQuery BuildQuery<T>();        
+		
+		public virtual string CreateTable(string name, string[] cols)
+        {
+            string sqlTable = "CREATE TABLE IF NOT EXISTS [" + name + "] ";
+
+            sqlTable += "(\r\n" + string.Join(",\r\n", cols) + "\r\n);";
+
+            return sqlTable;
+        }
+
+        public virtual string DropTable(string name)
+        {
+            return "DROP TABLE IF EXISTS [" + name + "]";
+        } 
 
         public virtual IQuery Select<T>(string[] cols)
 		{
@@ -119,12 +134,8 @@ namespace UnitODB
 		public virtual IQuery Count<T>()
 		{
 			return BuildQuery<T>().Count("*").From();
-		}  
-
-		public abstract int GetLastId();
-
-		/// <summary>This method is get table all rows
-		/// </summary>
+		} 
+ 
 		public virtual IList<T> ExecuteList<T>(IQuery q)
 		{
 			using (GenericEnumerator<T> enumerator = new GenericEnumerator<T>(q))
@@ -189,6 +200,7 @@ namespace UnitODB
 		{
 			Type type = t.GetType();
 			IQuery query = BuildQuery<T>();
+
 			query.Table = OdbMapping.GetTableName(type);
 
 			List<string> cols = new List<string>();
@@ -340,5 +352,6 @@ namespace UnitODB
 				return result;
 			}
 		} 
-	}
+         
+    }
 }

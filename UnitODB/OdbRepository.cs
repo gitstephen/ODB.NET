@@ -6,7 +6,7 @@ namespace UnitODB
 {
 	public class OdbRepository<T> : IRepository<T>, IRepository, IEnumerable<T>, IEnumerable where T : IEntity
 	{ 
-		public IContainer Unit { get; }
+		public IDbContext DbContext { get; private set; }
 		
 		private IDiagram _diagram;
 		public IDiagram Diagram
@@ -15,7 +15,7 @@ namespace UnitODB
 			{
 				if (_diagram == null)
 				{
-					_diagram = new OdbDiagram(Unit.Context.Depth);
+					_diagram = new OdbDiagram(DbContext.Depth);
 					_diagram.FetchTable(typeof(T));
 				}
 
@@ -32,7 +32,7 @@ namespace UnitODB
 				{ 
 					OdbTable t = this.Diagram.GetTable(typeof(T));
 
-					this._entities = this.Unit.Query<T>(this.Diagram.GetColumns()).As(t.Alias);
+					this._entities = this.DbContext.Select<T>(this.Diagram.GetColumns()).As(t.Alias);
 
 					foreach (var kv in this.Diagram.Tables)
 					{
@@ -44,14 +44,14 @@ namespace UnitODB
 			}
 		} 
 
-		public OdbRepository(IContainer container)
+		public OdbRepository(IDbContext dbContext)
 		{
-			if (container == null)
+			if (dbContext == null)
 			{
-				throw new ArgumentNullException("container", "Container cannot be null.");
+				throw new ArgumentNullException("dbContext", "dbContext cannot be null.");
 			}
 
-			Unit = container;
+			this.DbContext = dbContext;
 		}
 
 		public void SetDepth(int depth)
@@ -61,7 +61,7 @@ namespace UnitODB
 				throw new ArgumentNullException("depth", "Depth cannot be zero.");
 			}
 
-			Unit.Context.Depth = depth;
+            DbContext.Depth = depth;
 
 			if (_diagram != null)
 			{
@@ -88,26 +88,11 @@ namespace UnitODB
 			} 
 		}	
 		
-		public void Add(T t)
-		{
-			Unit.RegisterAdd(t);
-		}
-
-		public void Update(T t)
-		{
-			Unit.RegisterUpdate(t);
-		}
-
-		public virtual void Delete(T t)
-		{
-			Unit.RegisterDelete(t);
-		}
-
 		public virtual long Count()
 		{
-			IQuery q = Unit.Context.Count<T>();
+			IQuery q = DbContext.Count<T>();
 			
-			return Unit.Context.ExecuteScalar<long>(q); 
+			return DbContext.ExecuteScalar<long>(q); 
 		}
 
 		public virtual IList<T> ToList()

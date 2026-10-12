@@ -10,9 +10,8 @@ namespace UnitODB.Linq
 	public abstract class OdbEntityProvider : OdbProvider, IEntityProvider
 	{
 		public IOdbVisitor Visitor { get; set; } 
-		protected OdbEntityProvider()
-		{			
-		}
+		
+		protected OdbEntityProvider(string db) : base(db) {}	
 
 		public IQueryable CreateQuery(Expression expression)
 		{

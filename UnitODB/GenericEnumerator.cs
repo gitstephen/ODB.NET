@@ -119,6 +119,7 @@ namespace UnitODB
 			{
 				return dr[i];
 			}
+
 			return null;
 		}
 
@@ -130,6 +131,7 @@ namespace UnitODB
 			{
 				list.Add(item);
 			}
+
 			return list;
         }
     }

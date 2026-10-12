@@ -12,14 +12,14 @@ namespace UnitODB.SQLite
 		{
 		}
 
-		public override int GetLastId()
-		{ 
-			return (int)(this.Connection as SQLiteConnection).LastInsertRowId;
-		} 
-
         public override IQuery BuildQuery<T>()
         {
             return new SQLiteQuery<T>(this);
-        } 
+        }
+
+        public override int GetLastId()
+		{ 
+			return (int)(this.Connection as SQLiteConnection).LastInsertRowId;
+		}  
     }
 }

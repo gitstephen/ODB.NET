@@ -11,9 +11,11 @@ namespace UnitODB
 
 		void Clear<T>();
 
-		IQuery Query<T>(string[] cols); 
- 
-		void RegisterAdd<T>(T t);
+		IQuery Query<T>(string[] cols);
+
+		IRepository<T> CreateRepository<T>() where T : IEntity;
+
+        void RegisterAdd<T>(T t);
 
 		void RegisterUpdate<T>(T t);
 

@@ -69,7 +69,7 @@ namespace UnitTest
         {
             using (var container = CreateContainer())
             {
-                var repo = new OdbRepository<User>(container);
+                var repo = container.CreateRepository<User>();
 
                 var qs = from user in repo
                          where user.Id == 2
@@ -86,7 +86,7 @@ namespace UnitTest
         {
             using (var container = CreateContainer())
             {
-                var repo = new OdbRepository<User>(container);
+                var repo = container.CreateRepository<User>();
 
                 var n = repo.Count();
 
@@ -99,22 +99,16 @@ namespace UnitTest
         {
             using (var container = CreateContainer())
             {
-                var repo =  new OdbRepository<User>(container);
-                
-                var rs = repo.GetEntityQueryable<User>();
+                var repo = container.CreateRepository<User>();
 
-                var q = rs.Where(user => user.Id == 2).Select(user => user);
-
-                var sql = q.ToString();
-
-                var list = q.ToList();
+                var list = repo.Gets(user => user.Id == 2);  
 
                 Assert.AreEqual(1, list.Count); 
             }
         }
 
-        private static OdbContainer CreateContainer() {
-            
+        private static OdbContainer CreateContainer() 
+        {            
             string file = "test.db";
             var connStr = string.Format("data source={0};version=3;pooling=True;page size=4096;cache size=8192;datetimekind=Local;datetimeformat=CurrentCulture;journal mode=Memory;legacy format=False;cache=shared", file);
 

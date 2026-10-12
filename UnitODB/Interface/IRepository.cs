@@ -5,18 +5,12 @@ namespace UnitODB
 {
 	public interface IRepository
 	{
-		IContainer Unit { get; }
+        IDbContext DbContext { get; }
 	}
 
 	public interface IRepository<T> : IRepository, IEnumerable<T>, IEnumerable
 	{
 		T Get(int id);
-
-		void Add(T t);
-
-		void Update(T t);
-
-		void Delete(T t);
 
 		long Count();
 

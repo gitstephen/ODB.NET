@@ -87,7 +87,7 @@ namespace UnitODB
 			if (flag)
 			{
 				string tableName = OdbMapping.GetTableName(type);
-				string sql = Provider.CreateTable(tableName, list.ToArray());
+				string sql = Context.CreateTable(tableName, list.ToArray());
 
 				return Context.ExecuteNonQuery(sql);
 			}
@@ -113,7 +113,7 @@ namespace UnitODB
 			}
 
 			string tableName = OdbMapping.GetTableName(type);
-			string sql = Provider.DropTable(tableName);
+			string sql = Context.DropTable(tableName);
 
 			return Context.ExecuteNonQuery(sql);
 		}
@@ -198,5 +198,10 @@ namespace UnitODB
 				actionRegisters.Clear();
 			}
 		}
-	}
+
+        public IRepository<T> CreateRepository<T>() where T : IEntity
+        {
+           return new OdbRepository<T>(Context);
+        }
+    }
 }

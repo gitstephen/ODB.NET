@@ -9,17 +9,14 @@ using UnitODB.Linq;
 namespace UnitODB.SQLite
 {
     public class SQLiteOdbProvider : OdbEntityProvider, IProvider
-    {
-		public string DB { get; set; }
-
-		public SQLiteOdbProvider(string db)
-		{
-			this.DB = db;
+    { 
+		public SQLiteOdbProvider(string db) : base(db)
+		{ 
 		} 
 
         public override IDbContext CreateContext()
-		{  
-			if (this.DbContext == null)
+		{   
+            if (this.DbContext == null)
 			{
 				this.DbContext = new SQLiteOdbContext(this);
             }
@@ -53,7 +50,7 @@ namespace UnitODB.SQLite
 			return stm + " NOT NULL";
 		}
 		 
-		public override string SqlTypeStr(Type type)
+		public static string SqlTypeStr(Type type)
 		{
 			switch (OdbSqlType.Convert(type))
 			{
@@ -114,6 +111,6 @@ namespace UnitODB.SQLite
         public override IEntityQuery<T> CreateQuery<T>()
         {
             return new EntityQuery<T>(this);
-        }
+        } 
     }
 }

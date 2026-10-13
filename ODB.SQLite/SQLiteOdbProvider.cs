@@ -18,7 +18,11 @@ namespace UnitODB.SQLite
 		{   
             if (this.DbContext == null)
 			{
-				this.DbContext = new SQLiteOdbContext(this);
+				var connection = this.CreateConnection();
+
+                this.DbContext = new SQLiteOdbContext(connection);
+
+				this.DbContext.Provider = this;
             }
 
 			return this.DbContext; 
@@ -88,16 +92,6 @@ namespace UnitODB.SQLite
 			}
 		}
 
-        public override IDbDataParameter CreateParameter(int index, object value)
-        {
-            return new SQLiteParameter
-            {
-                ParameterName = "@p" + index,
-                Value = value ?? DBNull.Value,
-                DbType = OdbSqlType.Get(value)
-            };
-        }
-
         public override string ToSql(Expression expression)
         {
             if (this.Visitor == null)
@@ -108,7 +102,17 @@ namespace UnitODB.SQLite
             return this.Visitor.Translate(expression);
         }
 
-        public override IEntityQuery<T> CreateQuery<T>()
+        public override IDbDataParameter CreateParameter(int index, object value)
+        {
+            return new SQLiteParameter
+            {
+                ParameterName = "@p" + index,
+                Value = value ?? DBNull.Value,
+                DbType = OdbSqlType.Get(value)
+            };
+        }
+        
+		public override IEntityQuery<T> CreateQuery<T>()
         {
             return new EntityQuery<T>(this);
         } 

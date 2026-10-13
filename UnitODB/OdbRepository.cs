@@ -1,12 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Remoting.Contexts;
 
 namespace UnitODB
 {
 	public class OdbRepository<T> : IRepository<T>, IRepository, IEnumerable<T>, IEnumerable where T : IEntity
 	{ 
-		public IDbContext DbContext { get; private set; }
+		public IDbContext DbContext { get; private set; } 
 		
 		private IDiagram _diagram;
 		public IDiagram Diagram
@@ -74,7 +75,12 @@ namespace UnitODB
 			}
 		}
 
-		public virtual T Get(int id)
+        public virtual IQuery Query(string[] cols)
+        {
+            return DbContext.Select<T>(cols);
+        }
+
+        public virtual T Get(int id)
 		{
 			var table = this.Diagram.GetTable(typeof(T));
  

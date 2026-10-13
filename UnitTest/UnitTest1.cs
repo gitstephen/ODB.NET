@@ -41,9 +41,9 @@ namespace UnitTest
         {
             using (var container = CreateContainer())
             {
-                var q = container.Query<User>(new string[] { "*" });
+                var repo = container.CreateRepository<User>();
 
-                var list = q.ToList<User>();
+                var list = repo.Query(new string[] { "*" }).ToList<User>(); 
 
                 Assert.IsTrue(list.Count > 1);
             } 
@@ -54,7 +54,9 @@ namespace UnitTest
         {
             using (var container = CreateContainer())
             {
-                var q = container.Query<User>(new string[] { "*" }).Where("Name").Eq("Peter Chan");
+                var repo = container.CreateRepository<User>();
+
+                var q = repo.Query(new string[] { "*" }).Where("Name").Eq("Peter Chan");
 
                 var list = q.ToList<User>();
 
@@ -99,9 +101,24 @@ namespace UnitTest
         {
             using (var container = CreateContainer())
             {
-                var repo = container.CreateRepository<User>();
+                var list = container.Gets<User>(user => user.Id == 2);  
 
-                var list = repo.Gets(user => user.Id == 2);  
+                Assert.AreEqual(1, list.Count); 
+            }
+        }
+
+        [TestMethod]
+        public void TestMethod8()
+        {
+            using (var container = CreateContainer())
+            {
+                var query = container.EntityQueryable<User>();
+
+                var rs = from user in query
+                         where user.Id == 2
+                         select user;
+
+                var list =  rs.ToList();
 
                 Assert.AreEqual(1, list.Count); 
             }

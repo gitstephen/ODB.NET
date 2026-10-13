@@ -9,9 +9,7 @@ namespace UnitODB
 
 		bool AutoCommit { get; set; } 
 
-		void Clear<T>();
-
-		IQuery Query<T>(string[] cols);
+		void Clear<T>(); 
 
 		IRepository<T> CreateRepository<T>() where T : IEntity;
 

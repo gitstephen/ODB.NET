@@ -21,7 +21,6 @@ namespace UnitODB
         public abstract string CreateColumn(OdbColumn col);
 		public abstract IDbConnection CreateConnection();
 		public abstract IDbContext CreateContext();
-		public abstract IDbDataParameter CreateParameter(int index, object value);
-        
+        public abstract IDbDataParameter CreateParameter(int index, object value);         
     }
 }

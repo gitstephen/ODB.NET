@@ -6,6 +6,6 @@ namespace UnitODB
 	public interface IOdbProvider : IProvider
 	{ 
         string CreateColumn(OdbColumn col);
-        IDbDataParameter CreateParameter(int index, object value); 
+        IDbDataParameter CreateParameter(int index, object value);
     }
 }

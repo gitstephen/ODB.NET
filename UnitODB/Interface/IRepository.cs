@@ -11,8 +11,9 @@ namespace UnitODB
 	public interface IRepository<T> : IRepository, IEnumerable<T>, IEnumerable
 	{
 		T Get(int id);
+		IQuery Query(string[] cols);
 
-		long Count();
+        long Count();
 
 		IList<T> ToList();
 

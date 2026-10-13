@@ -52,12 +52,7 @@ namespace UnitODB
 		{
 			Dispose(true);
 			GC.SuppressFinalize(this);
-		}
-
-		public virtual IQuery Query<T>(string[] cols)
-		{
-			return Context.Select<T>(cols);
-		}
+		} 
 
 		/// <summary>This method is create a table by column
 		/// </summary>

@@ -5,20 +5,18 @@ using System.Data;
 namespace UnitODB
 {
 	public abstract class OdbContext : IDbContext, IDisposable
-	{
-		public IOdbProvider Provider { get; set; }
+	{ 
         protected IDbConnection Connection { get; set; }
 		public IDbTransaction Transaction { get; set; }
 
 		public int Depth { get; set; }
-		
-		private bool disposed;
-		
-		public OdbContext(IOdbProvider provider)
-		{
-			this.Provider = provider;
+        public IOdbProvider Provider { get; set; }
 
-            this.Connection = this.Provider.CreateConnection();
+        private bool disposed;
+		
+		public OdbContext(IDbConnection connection)
+		{ 
+            this.Connection = connection;
 
 			Depth = 1;
 		}
@@ -352,6 +350,5 @@ namespace UnitODB
 				return result;
 			}
 		} 
-         
     }
 }

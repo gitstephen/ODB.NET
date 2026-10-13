@@ -6,8 +6,8 @@ namespace UnitODB
 {
 	public interface IDbContext : IDisposable {
 
-        IOdbProvider Provider { get; } 
-		int Depth { get; set; }
+        IOdbProvider Provider { get; set; }
+        int Depth { get; set; }
 				
 		void BeginTrans();
 
@@ -29,7 +29,8 @@ namespace UnitODB
 
 		IQuery Count<T>();
 
-        string CreateTable(string name, string[] cols);
+        string CreateTable(string name, string[] cols); 
+
         string DropTable(string name);
 
         int ExecuteStore<T>(T t);

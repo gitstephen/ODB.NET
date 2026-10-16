@@ -6,14 +6,14 @@ namespace UnitODB.Linq
 {
 	public static class PredicateExpress
 	{
-		public static Expression<Func<T, bool>> True<T>() where T : IEntity
+		public static Expression<Func<T, bool>> True<T>()
 		{
-			return (T f) => true;
+			return _ => true;
 		}
 
-		public static Expression<Func<T, bool>> False<T>() where T : IEntity
+		public static Expression<Func<T, bool>> False<T>()
 		{
-			return (T f) => false;
+			return _ => false;
 		}
 
 		public static Expression<Func<T, bool>> Or<T>(this Expression<Func<T, bool>> expr1, Expression<Func<T, bool>> expr2)

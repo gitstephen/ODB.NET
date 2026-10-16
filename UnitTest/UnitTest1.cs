@@ -124,6 +124,44 @@ namespace UnitTest
             }
         }
 
+        [TestMethod]
+        public void TestMethod9()
+        {
+            using (var container = CreateContainer())
+            {
+                var p = container.First<User>(user => user.Id == 3);
+
+                if (p != null)
+                {
+                    p.Email = "john@ibm.com.hk";    
+                
+                    container.RegisterUpdate(p);
+
+                    container.Commit();
+                } 
+
+                Assert.IsNotNull(p);
+            }
+        }
+
+        [TestMethod]
+        public void TestMethod10()
+        {
+            using (var container = CreateContainer())
+            {
+                var p = container.First<User>(user => user.Id == 4);
+
+                if (p != null)
+                { 
+                    container.RegisterDelete(p);
+
+                    container.Commit();
+                }
+
+                Assert.IsNotNull(p);
+            }
+        }
+
         private static OdbContainer CreateContainer() 
         {            
             string file = "test.db";
